@@ -26,7 +26,6 @@ jobs:
           mkdir -p frontend
           cp frontend-source/pricing_vidrio_laminado_v4_50.html frontend/index.html
           echo "Frontend copiado"
-          ls -la frontend/
 
       - name: Setup Python 3.12
         uses: actions/setup-python@v5
@@ -36,7 +35,11 @@ jobs:
       - name: Instalar dependencias
         run: |
           python -m pip install --upgrade pip
-          pip install -r backend/requirements.txt
+          pip install -r requirements.txt
+
+      - name: Crear estructura de inicio para Azure
+        run: |
+          echo "web: uvicorn backend.app.main:app --host 0.0.0.0 --port 8000" > Procfile
 
       - name: Deploy a Azure App Service
         uses: azure/webapps-deploy@v3
